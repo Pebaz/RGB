@@ -1,9 +1,8 @@
-#define CALC_H 
 #define _INTEGRAL_MAX_BITS 64
 #define _MSC_BUILD 1
 #define _MSC_EXTENSIONS 1
-#define _MSC_FULL_VER 191426433
-#define _MSC_VER 1914
+#define _MSC_FULL_VER 191225835
+#define _MSC_VER 1912
 #define _M_AMD64 100
 #define _M_X64 100
 #define _WIN32 1
@@ -331,7 +330,8 @@
 #define __x86_64 1
 #define __x86_64__ 1
 
-__declspec(dllexport) float __cdecl colonist_add(float x, float y);
-__declspec(dllexport) float __cdecl colonist_sub(float x, float y);
-__declspec(dllexport) float __cdecl colonist_mul(float x, float y);
-__declspec(dllexport) float __cdecl colonist_div(float x, float y);
+struct Point
+{
+    int x, y, z;
+    char **first_name, last_name;
+};

@@ -295,6 +295,7 @@ Decl = OneOrMore(
 	StructPrefix
 	| Identifier
 	| Literal('*')
+	| Literal(',')
 ) + Literal(';').suppress()
 
 '''

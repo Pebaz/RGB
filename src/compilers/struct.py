@@ -103,22 +103,59 @@ class StructCompiler:
 				# Anything past here is a normal declaration (remove struct)
 				line.replace('struct', '')
 
+				# Handle Multiple Declarations on one line
+
 				the_decl = list(Decl.parseString(line.strip()))
+				end_of_type = None # Index where the type ends in list
 
-				had_to_make_affordances_for_red_system_again = False
-
+				# Get the index of where the type ends
 				if '*' in the_decl:
-					if the_decl.count('*') > 1:
-						the_decl = 'int', '*', the_decl[-1]
-						had_to_make_affordances_for_red_system_again = True
+					end_of_type = (len(the_decl) - the_decl[::-1].index('*'))
+					
+				# The first item _is_ the type
+				else:
+					end_of_type = 1
 
-				res = tab + argument(the_decl)
+				# ['int', '*', <-- 'x', ',', 'y', ',', 'z']
+				the_type = the_decl[:end_of_type]
 
-				if had_to_make_affordances_for_red_system_again:
-					res += f' ; {line.strip()}'
+				values = split_list(the_decl[end_of_type:], ',')
 
-				if RGB_ENABLE_STDOUT:
-					print(line + w[len(line):], res)
+				'''
+				Since the `argument` function needs only one type + id,
+				add the type to each and every var and handle them separately
+				'''
+				values = [the_type + i for i in values]
+
+
+				for value in values:
+
+					had_to_make_affordances_for_red_system_again = False
+
+					# Handle pointers
+					if '*' in value:
+
+						# Only cap it to a single pointer if the decl has > 1
+						if value.count('*') > 1:
+							value = 'int', '*', value[-1]
+							had_to_make_affordances_for_red_system_again = True
+
+					res = tab + argument(value)
+
+					if had_to_make_affordances_for_red_system_again:
+						res += f' ; {line.strip()}'
+
+					if RGB_ENABLE_STDOUT:
+						print(line + w[len(line):], res)
+
+					# Manually add this res so that each variable can be added
+					self.result += res + '\n'
+
+				'''
+				Since we manually added each var, we don't need to add the
+				last one again
+				'''
+				res = ''
 
 			elif '}' in line:
 				tab = '    ' * (struct_nest - 1)
