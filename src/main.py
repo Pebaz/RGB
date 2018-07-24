@@ -32,6 +32,7 @@ This program has multiple stages:
    in a Red program by simply importing the "header" file.
 """
 
+import os # Basename
 import fire # CLI framework
 import format # Launching the formatter
 from rgb import RGB # RGB compiler class
@@ -40,12 +41,27 @@ class CLI:
 	"""
 	Red Generator of Bindings's command line interface.
 	"""
-	def gen(self, header, llvm_dir, dynlib, out_file=None, call_con='cdecl', include_dir='.'):
+	def gen(self, header, llvm_dir, dynlib=None, out_file=None,
+		call_con='cdecl', include_dir='.', debug=False):
 		"""
 		Generate a Red/System binding file from the given header input.
+
+		Args:
+			header(str): the header to parse.
+			llvm_dir(str): the binary directory where LLVM lives
+			dynlib(str): the dynamic library target, used in the outfile
+			out_file(str): the path/name.ext of the output file
+			call_con(str): the calling convention of the library
+			include_dir(str): where other include files are, same as C
+			debug(bool): whether verbose debugging should occur
 		"""
 		# Clean up the header file and obtain all declarations/pound defines
 		declarations = format.format_header(header, llvm_dir, include_dir)
+
+		# Fix null dynamic lib name
+		if dynlib == None:
+			# Since the extension doesn't matter, just add a dot to it
+			dynlib = os.path.basename(header).split('.')[0] + '.'
 
 		# Both parse and generate the declarations
 		rgb_compiler = RGB(declarations, dynlib, call_con, out_file)
