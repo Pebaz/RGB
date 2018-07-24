@@ -129,7 +129,7 @@ with the potential to be used as a be-all-end-all solution for all development.
 Languages such as [Python](https://www.python.org/) have innate programmer
 productivity boosts that are related to the succinctness of its syntax. Red is
 very similar to Python in that it is dead simple to write. Due to its
-homoiconic syntax, it is more semmantically compressed than lanauges such as
+homoiconic syntax, it is more semantically compressed than languages such as
 C++/Java, which according to [Casey Muratori](https://caseymuratori.com/blog_0015),
 leads to greater complexity and more bugs.
 
