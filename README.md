@@ -157,7 +157,7 @@ software that would automate it as much as possible, much like the project
 -------------------------------------------------------------------------------
 
 ```sh
-git clone://github.com/Pebaz/RGB
+git clone https://github.com/Pebaz/RGB
 cd RGB
 pip install -r requirements.txt
 ```
