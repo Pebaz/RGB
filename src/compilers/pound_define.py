@@ -164,7 +164,12 @@ class PoundDefineCompiler:
 
 				# NOTE(Pebaz) Simple check for sanity
 				if out[-1] != ')' or out[0] != '(':
-					raise Exception(') error. ' + str(out))
+					#raise Exception(f'Paren `)` error. {out}\n    {res}')
+					c_code_warning(
+						file,
+						f'{res[0]} {res[1]} [{" ".join(res[2:])}]',
+						self.line
+					)
 
 				# Surround individual arguments with parentheses for Red/System
 				for i in range(len(out)):
@@ -187,8 +192,13 @@ class PoundDefineCompiler:
 
 			# Can only be C code from here on out because it contains a pragma
 			else:
-				raise Exception(
-					'Should never get here!\n'
-					f'Offending line: {self.line}'
+				# raise Exception(
+				# 	'Should never get here!\n'
+				# 	f'Offending line: {self.line}'
+				# )
+				c_code_warning(
+					file,
+					f'UNSUPPORTED SYNTAX: CREATE AN ISSUE ON GITHUB.\n{res[0]} {res[1]} [{" ".join(res[2:])}]',
+					self.line
 				)
 

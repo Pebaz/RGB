@@ -1,8 +1,9 @@
+#define CALC_H 
 #define _INTEGRAL_MAX_BITS 64
 #define _MSC_BUILD 1
 #define _MSC_EXTENSIONS 1
-#define _MSC_FULL_VER 191225835
-#define _MSC_VER 1912
+#define _MSC_FULL_VER 191627026
+#define _MSC_VER 1916
 #define _M_AMD64 100
 #define _M_X64 100
 #define _WIN32 1
@@ -183,7 +184,6 @@
 #define __PTRDIFF_WIDTH__ 64
 #define __REGISTER_PREFIX__ 
 #define __SCHAR_MAX__ 127
-#define __SEH__ 1
 #define __SHRT_MAX__ 32767
 #define __SIG_ATOMIC_MAX__ 2147483647
 #define __SIG_ATOMIC_WIDTH__ 32
@@ -199,7 +199,7 @@
 #define __SIZEOF_SHORT__ 2
 #define __SIZEOF_SIZE_T__ 8
 #define __SIZEOF_WCHAR_T__ 2
-#define __SIZEOF_WINT_T__ 4
+#define __SIZEOF_WINT_T__ 2
 #define __SIZE_FMTX__ "llX"
 #define __SIZE_FMTo__ "llo"
 #define __SIZE_FMTu__ "llu"
@@ -307,21 +307,23 @@
 #define __UINT_LEAST8_MAX__ 255
 #define __UINT_LEAST8_TYPE__ unsigned char
 #define __USER_LABEL_PREFIX__ 
-#define __VERSION__ "4.2.1 Compatible Clang 6.0.0 (tags/RELEASE_600/final)"
+#define __VERSION__ "4.2.1 Compatible Clang 9.0.0 (trunk)"
 #define __WCHAR_MAX__ 65535
 #define __WCHAR_TYPE__ unsigned short
 #define __WCHAR_UNSIGNED__ 1
 #define __WCHAR_WIDTH__ 16
-#define __WINT_MAX__ 2147483647
-#define __WINT_TYPE__ int
-#define __WINT_WIDTH__ 32
+#define __WINT_MAX__ 65535
+#define __WINT_TYPE__ unsigned short
+#define __WINT_UNSIGNED__ 1
+#define __WINT_WIDTH__ 16
 #define __amd64 1
 #define __amd64__ 1
 #define __clang__ 1
-#define __clang_major__ 6
+#define __clang_major__ 9
 #define __clang_minor__ 0
 #define __clang_patchlevel__ 0
-#define __clang_version__ "6.0.0 (tags/RELEASE_600/final)"
+#define __clang_version__ "9.0.0 (trunk)"
+#define __code_model_small_ 1
 #define __k8 1
 #define __k8__ 1
 #define __llvm__ 1
@@ -330,8 +332,7 @@
 #define __x86_64 1
 #define __x86_64__ 1
 
-struct Point
-{
-    int x, y, z;
-    char **first_name, last_name;
-};
+__declspec(dllexport) float __cdecl colonist_add(float x, float y);
+__declspec(dllexport) float __cdecl colonist_sub(float x, float y);
+__declspec(dllexport) float __cdecl colonist_mul(float x, float y);
+__declspec(dllexport) float __cdecl colonist_div(float x, float y);

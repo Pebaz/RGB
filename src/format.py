@@ -64,13 +64,17 @@ def format_header(header, llvm_dir, includes):
 	clang.stdout.close()
 
 	# Get the cleansed output
-	declarations = clang_format.communicate()[0].decode('UTF-8')
-
-	# Remove comments and blank lines
-	declarations = [
-		line + '\n' for line in declarations.split('\n')
-		if len(line.strip()) > 0 and line.strip()[0] != '#'
-	]
+	declarations = []
+	record = False
+	for line in clang_format.communicate()[0].decode('UTF-8').split('\n'):
+		line = line.strip()
+		if line.startswith('#'):
+			# Checks to see if the __FILE__ has switched back to `header`
+			# If it has, start recording lines again and stop when __FILE__ is
+			# one of the included headers.
+			record = f'"{header}"' in line
+		elif record and line and not line.startswith('#'):
+			declarations.append(line + '\n')
 
 	# Run clang again with the purpose of obtaining all pound defines
 	cmd_line = [f'{llvm_dir}clang', '-dM', '-E', header]
